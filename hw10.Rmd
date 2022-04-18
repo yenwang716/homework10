@@ -7,6 +7,8 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+acc = read.csv("accident.csv")
 ```
 
 ## R Markdown
@@ -25,6 +27,12 @@ You can also embed plots, for example:
 
 ```{r pressure, echo=FALSE}
 acc %>% filter(HOUR <=24) %>% group_by(HOUR) %>% tally()
+```{r}
+acc %>% group_by(DAY_WEEK) %>% tally()
+acc %>% ggplot(aes(x = DAY_WEEK)) + geom_bar()
+acc.hour = acc %>% filter(HOUR <= 24) %>% group_by(HOUR) %>% tally()
+acc %>% filter(HOUR <= 24) %>% group_by(HOUR) %>% ggplot(aes(x = HOUR)) + geom_bar()
+table(acc$DRUNK_DR)
+
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
