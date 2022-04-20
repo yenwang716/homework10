@@ -11,11 +11,19 @@ library(tidyverse)
 acc = read.csv("accident.csv")
 ```
 
+# Part one
 ```{r}
 acc %>% group_by(DAY_WEEK) %>% tally()
 acc %>% ggplot(aes(x = DAY_WEEK)) + geom_bar()
 acc.hour = acc %>% filter(HOUR <= 24) %>% group_by(HOUR) %>% tally()
 acc %>% filter(HOUR <= 24) %>% group_by(HOUR) %>% ggplot(aes(x = HOUR)) + geom_bar()
 table(acc$DRUNK_DR)
+```
+
+#Part two
+```{r}
+person = read.csv("person.csv")
+
+
 ```
 
