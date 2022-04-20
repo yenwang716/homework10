@@ -16,8 +16,9 @@ acc = read.csv("accident.csv")
 ```
 
 
-```{r pressure, echo=FALSE}
+```{r}
 acc %>% filter(HOUR <=24) %>% group_by(HOUR) %>% tally()
+# Part one
 acc %>% group_by(DAY_WEEK) %>% tally()
 acc %>% ggplot(aes(x = DAY_WEEK)) + geom_bar()
 acc.hour = acc %>% filter(HOUR <= 24) %>% group_by(HOUR) %>% tally()
@@ -51,21 +52,3 @@ driverAccidents %>% group_by(SEX) %>% ggplot(aes(x=as.character(SEX))) + geom_ba
   scale_x_discrete(labels=c("Male", "Female", "Unknown", "Not Reported", "NA")) +
   labs(x="Sex", y="Accidents", title="Accidents vs Sex")
 ```
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
