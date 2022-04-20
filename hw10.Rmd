@@ -1,38 +1,71 @@
 ---
 title: "hw10"
-author: "Yen Wang"
+author: "Yen Wang and Nathan Frank"
 date: "4/13/2022"
 output: html_document
 ---
 
+Team members: Yen Wang and Nathan Frank
+Link to repo: https://github.com/yenwang716/homework10
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
+library(maps)
 acc = read.csv("accident.csv")
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
 
 ```{r pressure, echo=FALSE}
 acc %>% filter(HOUR <=24) %>% group_by(HOUR) %>% tally()
-```{r}
 acc %>% group_by(DAY_WEEK) %>% tally()
 acc %>% ggplot(aes(x = DAY_WEEK)) + geom_bar()
 acc.hour = acc %>% filter(HOUR <= 24) %>% group_by(HOUR) %>% tally()
 acc %>% filter(HOUR <= 24) %>% group_by(HOUR) %>% ggplot(aes(x = HOUR)) + geom_bar()
 table(acc$DRUNK_DR)
-
 ```
+
+
+```{r}
+
+persons = read.csv("person.csv")
+#PER_TYP 1 is a driver
+drivers = persons %>% filter(PER_TYP == 1)
+
+driverAccidents = acc %>% left_join(drivers, by="ST_CASE")
+
+driverAccidents %>% group_by(DAY_WEEK) %>% tally()
+
+driverAccidents %>% group_by(DAY_WEEK) %>% ggplot(aes(x = as.character(DAY_WEEK))) + geom_bar() + 
+  scale_x_discrete(labels=c("Sun", "Mon", "Tue", "Wed", "Thurs", "Fri", "Sat")) +
+  labs(x="Day of Week", y="Accidents", title="Accidents vs Day of Week")
+
+driverAccidents %>% filter(HOUR.x <= 24) %>% group_by(HOUR.x) %>% tally()
+
+driverAccidents %>% filter(HOUR.x <= 24) %>% group_by(HOUR.x) %>% ggplot(aes(x = HOUR.x)) + geom_bar() +
+  labs(x="Hour", y="Accidents", title="Accidents vs Hour")
+
+driverAccidents %>% group_by(SEX) %>% tally()
+
+driverAccidents %>% group_by(SEX) %>% ggplot(aes(x=as.character(SEX))) + geom_bar() + 
+  scale_x_discrete(labels=c("Male", "Female", "Unknown", "Not Reported", "NA")) +
+  labs(x="Sex", y="Accidents", title="Accidents vs Sex")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
